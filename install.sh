@@ -400,8 +400,8 @@ setup_zsh_plugins() {
 init_theme() {
     log_step "Initializing Dynamic Material You Theming"
 
-    local DEFAULT_WALL="$HOME/Pictures/wallpaper/qz7pz7.png"
-    [ ! -f "$DEFAULT_WALL" ] && DEFAULT_WALL="$HOME/Pictures/wallpaper/japan-artistic.jpg"
+    local DEFAULT_WALL="$HOME/Pictures/wallpaper/e-state-garage.jpg"
+    [ ! -f "$DEFAULT_WALL" ] && DEFAULT_WALL="$HOME/Pictures/wallpaper/e-state-ad-towers.jpg"
     [ ! -f "$DEFAULT_WALL" ] && DEFAULT_WALL=$(find "$HOME/Pictures/wallpaper" -type f \( -iname "*.jpg" -o -iname "*.png" \) 2>/dev/null | head -n 1)
 
     mkdir -p "$HOME/.cache"

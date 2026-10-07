@@ -5,6 +5,8 @@ import Quickshell
 import Quickshell.Wayland
 import Quickshell.Io
 
+
+
 PanelWindow {
     id: cheatsheetWindow
 
