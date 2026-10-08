@@ -1,10 +1,12 @@
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import "bar_widgets"
 
 ShellRoot {
     id: root
 
+    
     property bool dashboardVisible: false
     property bool launcherVisible: false
     property bool wallpaperPickerVisible: false
@@ -14,8 +16,13 @@ ShellRoot {
     property bool overviewVisible: false
     property bool themePickerVisible: false
     property bool cheatsheetVisible: false
-
+    property bool clipboardVisible: false
+    property bool wifiWidgetVisisble: false
+    
     function closeAll() {
+        /* In progress shortening all of this, gotta separate a bunch of the apps which were bundled for some reason
+         */
+
         dashboardVisible = false
         launcherVisible = false
         wallpaperPickerVisible = false
@@ -25,6 +32,8 @@ ShellRoot {
         overviewVisible = false
         themePickerVisible = false
         cheatsheetVisible = false
+        clipboardVisible = false
+        wifiWidgetVisisble = false
     }
 
     function toggleCheatsheet() {
@@ -82,22 +91,22 @@ ShellRoot {
     }
 
     function toggleLauncher() {
-        if (launcherVisible && launcher.currentMode === "apps") {
+        if (launcherVisible) {
             launcherVisible = false
         } else {
             closeAll()
-            launcher.openApps()
+            launcher.open()
             launcherVisible = true
         }
     }
 
-    function openLauncherClip() {
-        if (launcherVisible && launcher.currentMode === "clip") {
-            launcherVisible = false
+    function toggleClipboard() {
+        if (clipboardVisible) {
+            clipboardVisible = false
         } else {
             closeAll()
-            launcher.openClip()
-            launcherVisible = true
+            clipboard.open()
+            clipboardVisible= true
         }
     }
 
@@ -130,7 +139,11 @@ ShellRoot {
     IpcHandler {
         target: "launcher"
         function toggle() { root.toggleLauncher() }
-        function clip() { root.openLauncherClip() }
+    }
+
+    IpcHandler {
+        target: "clipboard"
+        function toggle() { root.toggleClipboard() }
     }
 
     IpcHandler {
@@ -190,13 +203,26 @@ ShellRoot {
         onRequestClose: root.dashboardVisible = false
     }
 
-    // App Launcher & Clipboard Modal
+    WiFiWidget{
+        id:wifiwidget
+        visible: root.wifiWidgetVisisble
+        onRequestClose: root.wifiWidgetVisisble = false
+    }
+
+    // App Launcher
     Launcher {
         id: launcher
         visible: root.launcherVisible
         onRequestClose: root.launcherVisible = false
     }
 
+    // Clipbioard
+    Clipboard {
+        id: clipboard 
+        visible: root.clipboardVisible
+        onRequestClose: root.clipboardVisible = false
+    }
+    
     // Wallpaper & Palette Picker Modal
     WallpaperPicker {
         id: wallpaperPicker

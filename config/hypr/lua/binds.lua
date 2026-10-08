@@ -14,10 +14,9 @@ hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("brave-origin"))
 -- ── Quickshell Integrations (Replaced Rofi & Waybar) ──────────────────
 -- App Launcher (Spotlight)
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("quickshell ipc call launcher toggle"))
-hl.bind(mainMod .. " + D",     hl.dsp.exec_cmd("quickshell ipc call launcher toggle"))
 
 -- Clipboard History
-hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("quickshell ipc call launcher clip"))
+hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("quickshell ipc call clipboard toggle"))
 
 -- Native Window Overview / Exposé (SUPER+TAB / ALT+TAB)
 hl.bind(mainMod .. " + TAB", hl.dsp.exec_cmd("quickshell ipc call overview toggle"))
@@ -29,8 +28,7 @@ hl.bind(mainMod .. " + comma", hl.dsp.exec_cmd("quickshell ipc call settings tog
 -- Wallpaper & Theming Decoupled (Visual Picker Modals)
 -- SUPER + W: Wallpaper & Dynamic Rice Menu (Full Sync)
 hl.bind(mainMod .. " + W",         hl.dsp.exec_cmd("quickshell ipc call wallpaper toggle"))
--- SUPER + SHIFT + W: Wallpaper Menu Only (Preserve Active Theme)
-hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("quickshell ipc call wallpaper wallOnly"))
+
 -- ALT + T: Curated Theme Preset Studio (Catppuccin, Tokyo Night, Gruvbox, etc.)
 hl.bind("ALT + T",                 hl.dsp.exec_cmd("quickshell ipc call theme_picker toggle"))
 

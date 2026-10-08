@@ -7,7 +7,7 @@ import Quickshell.Widgets
 import Quickshell.Io
 
 PanelWindow {
-    id: launcherWindow
+    id: clipboardWindow
 
     WlrLayershell.layer: WlrLayer.Overlay
     WlrLayershell.keyboardFocus: visible ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
@@ -23,19 +23,18 @@ PanelWindow {
     signal requestClose()
 
     function close() {
-        launcherWindow.requestClose()
-        visible = false
+        clipboardWindow.requestClose()
     }
+
     
 
     function open() {
         searchField.text = ""
-        launcherWindow.search = ""
+        clipboardWindow.search = ""
         itemsList.currentIndex = 0
         focusTimer.restart()
-        if (allApps.length === 0) appScanner.running = true
+        clipScanner.running = true
     }
-
 
     // Click outside backdrop to close
     Rectangle {
@@ -44,67 +43,48 @@ PanelWindow {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: launcherWindow.close()
+            onClicked: clipboardWindow.close()
         }
     }
 
-    // Apps state
-    property var allApps: []
     property string search: ""
 
-    property var filteredApps: {
-        let q = search.trim().toLowerCase()
-        if (!q) return allApps
 
-        let matches = []
-        for (let i = 0; i < allApps.length; i++) {
-            let app = allApps[i]
-            let nameLower = app.name.toLowerCase()
-            let score = 0
-            if (nameLower === q) {
-                score = 1000 + (app.score || 0)
-            } else if (nameLower.startsWith(q)) {
-                score = 500 + (app.score || 0)
-            } else if (nameLower.includes(q)) {
-                score = 200 + (app.score || 0)
-            } else if (app.search && app.search.includes(q)) {
-                score = 100 + (app.score || 0)
-            }
-            if (score > 0) {
-                matches.push({ app: app, searchScore: score })
-            }
-        }
-        matches.sort((a, b) => b.searchScore - a.searchScore)
-        return matches.map(m => m.app)
+    // Clipboard state
+    property var clipHistory: []
+    property var filteredClips: {
+        let q = search.trim().toLowerCase()
+        if (!q) return clipHistory
+        return clipHistory.filter(c => c.preview.toLowerCase().includes(q))
     }
 
 
-    // Process to scan desktop files
+    // Process to scan clipboard
     Process {
-        id: appScanner
-        command: [Quickshell.env("HOME") + "/.config/hypr/scripts/get-apps.py"]
+        id: clipScanner
+        command: [Quickshell.env("HOME") + "/.config/hypr/scripts/get-clipboard.py"]
         stdout: SplitParser {
             onRead: data => {
                 try {
-                    launcherWindow.allApps = JSON.parse(data)
+                    clipboardWindow.clipHistory = JSON.parse(data)
                 } catch (e) {
-                    console.warn("Failed to parse apps json:", e)
+                    console.warn("Failed to parse clip json:", e)
                 }
             }
         }
     }
 
-
-    // Process to execute chosen app 
+    // Process to execute chosen app or paste clip
     Process {
         id: actionRunner
         property var cmd: []
         command: cmd
     }
 
-    function launch(execCmd, appName) {
-        launcherWindow.close()
-        actionRunner.command = [Quickshell.env("HOME") + "/.config/hypr/scripts/launch-app.sh", execCmd, appName ?? ""]
+
+    function pasteClip(idVal) {
+        clipboardWindow.close()
+        actionRunner.command = [Quickshell.env("HOME") + "/.config/hypr/scripts/paste-clip.sh", String(idVal)]
         actionRunner.running = true
     }
 
@@ -118,16 +98,13 @@ PanelWindow {
     onVisibleChanged: {
         if (visible) {
             searchField.text = ""
-            launcherWindow.search = ""
+            clipboardWindow.search = ""
             itemsList.currentIndex = 0
             focusTimer.restart()
-            appScanner.running = true
+            clipScanner.running = true     
         }
     }
 
-    Component.onCompleted: {
-        appScanner.running = true
-    }
 
     // Central Spotlight Window
     Rectangle {
@@ -141,7 +118,7 @@ PanelWindow {
         border.width: 2
         clip: true
 
-        opacity: launcherWindow.visible ? 1.0 : 0.0
+        opacity: clipboardWindow.visible ? 1.0 : 0.0
         Behavior on opacity { NumberAnimation { duration: 50 } }
 
         ColumnLayout {
@@ -166,7 +143,7 @@ PanelWindow {
                     spacing: 10
 
                     Text {
-                        text: "󰍉"
+                        text: "󰅍"
                         font.family: "JetBrainsMono Nerd Font"
                         font.pixelSize: 16
                         color: searchField.activeFocus ? Theme.accent : Theme.gray
@@ -182,7 +159,7 @@ PanelWindow {
                         clip: true
 
                         Text {
-                            text: "Search apps"
+                            text: "Search copied text snippet..."
                             font.family: "JetBrainsMono Nerd Font"
                             font.pixelSize: 13
                             color: Theme.gray
@@ -190,15 +167,9 @@ PanelWindow {
                             anchors.verticalCenter: parent.verticalCenter
                         }
 
-                        onTextChanged: {
-                            let t = text
-                            launcherWindow.search = text
-                            itemsList.currentIndex = 0
-                        }
 
-                        // 100% keyboard-driven navigation
                         Keys.onPressed: event => {
-                            let count = launcherWindow.filteredApps.length
+                            let count = clipboardWindow.filteredClips.length
 
                             if (event.key === Qt.Key_Down || (event.modifiers & Qt.ControlModifier && (event.key === Qt.Key_N || event.key === Qt.Key_J))) {
                                 if (itemsList.currentIndex < count - 1) {
@@ -212,25 +183,20 @@ PanelWindow {
                                     itemsList.positionViewAtIndex(itemsList.currentIndex, ListView.Contain)
                                 }
                                 event.accepted = true
-                            } else if (event.key === Qt.Key_Tab) { // autocomplete
-                                if (itemsList.currentIndex < count - 1) itemsList.currentIndex++
-                                else itemsList.currentIndex = 0
-                                itemsList.positionViewAtIndex(itemsList.currentIndex, ListView.Contain)
-                                event.accepted = true
-                            } else if (event.key === Qt.Key_Backtab) {
+                            }  else if (event.key === Qt.Key_Backtab) {
                                 if (itemsList.currentIndex > 0) itemsList.currentIndex--
                                 else itemsList.currentIndex = count - 1
                                 itemsList.positionViewAtIndex(itemsList.currentIndex, ListView.Contain)
                                 event.accepted = true
-                            } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
-                                if (launcherWindow.filteredApps.length > 0 && itemsList.currentIndex >= 0 && itemsList.currentIndex < launcherWindow.filteredApps.length) {
-                                    let item = launcherWindow.filteredApps[itemsList.currentIndex]
-                                    launcherWindow.launch(item.exec, item.name)
-                                }
-                                event.accepted = true
                             } else if (event.key === Qt.Key_Escape) {
-                                launcherWindow.close()
+                                clipboardWindow.close()
                                 event.accepted = true
+                            } else if (event.key === Qt.Key_Return || event.key===Qt.Key_Enter) {
+                                if (clipboardWindow.filteredClips.length > 0 && itemsList.currentIndex >= 0 && itemsList.currentIndex < clipboardWindow.filteredClips.length){
+                                    clipboardWindow.pasteClip(clipboardWindow.filteredClips[itemsList.currentIndex].id)
+                                }
+                                event.accepted = true;
+                                
                             }
                         }
                     }
@@ -269,7 +235,7 @@ PanelWindow {
                 Layout.fillHeight: true
                 clip: true
                 spacing: 4
-                model: launcherWindow.filteredApps
+                model: clipboardWindow.filteredClips
 
                 delegate: Rectangle {
                     required property var modelData
@@ -278,7 +244,7 @@ PanelWindow {
                     property bool isSelected: index === itemsList.currentIndex
 
                     width: itemsList.width
-                    height: 50
+                    height: 44
                     radius: 6
                     color: isSelected ? Theme.bg2 : (itemMouse.containsMouse ? Qt.rgba(Theme.bg1.r, Theme.bg1.g, Theme.bg1.b, 0.45) : "transparent")
                     border.color: isSelected ? Theme.accent : "transparent"
@@ -290,44 +256,16 @@ PanelWindow {
                         anchors.rightMargin: 12
                         spacing: 12
 
-                        // Icon Container: High-res App Image or Letter Badge Fallback
-                        Item {
-                            visible: true 
-                            width: 30
-                            height: 30
+
+                        // Clipboard Item Icon
+                        Text {
+                            visible: true
+                            text: "󰅍"
+                            font.family: "JetBrainsMono Nerd Font"
+                            font.pixelSize: 15
+                            color: isSelected ? Theme.accent : Theme.silver
                             Layout.alignment: Qt.AlignVCenter
-
-                            Image {
-                                sourceSize.width: 64
-                                sourceSize.height: 64
-                                asynchronous: true
-                                id: appImg
-                                anchors.fill: parent
-                                source: (modelData.iconPath && modelData.iconPath.length > 0) ? ("file://" + modelData.iconPath) : ""
-                                fillMode: Image.PreserveAspectFit
-                                mipmap: true
-                                visible: status === Image.Ready
-                            }
-
-                            Rectangle {
-                                anchors.fill: parent
-                                radius: 5
-                                color: isSelected ? Qt.rgba(Theme.accent.r, Theme.accent.g, Theme.accent.b, 0.15) : Theme.bg1
-                                border.color: isSelected ? Theme.accent : Theme.bg3
-                                border.width: 1
-                                visible: !appImg.visible
-
-                                Text {
-                                    anchors.centerIn: parent
-                                    text: (modelData.name && modelData.name.length > 0) ? modelData.name.charAt(0).toUpperCase() : "󰀻"
-                                    font.family: "JetBrainsMono Nerd Font"
-                                    font.pixelSize: 13
-                                    font.bold: true
-                                    color: isSelected ? Theme.accent : Theme.fg1
-                                }
-                            }
                         }
-
 
                         // Text Details
                         ColumnLayout {
@@ -338,7 +276,7 @@ PanelWindow {
                             RowLayout {
                                 spacing: 8
                                 Text {
-                                    text: modelData.name
+                                    text: modelData.preview
                                     font.family: "JetBrainsMono Nerd Font"
                                     font.pixelSize: 13
                                     font.bold: isSelected
@@ -347,18 +285,10 @@ PanelWindow {
                                     Layout.fillWidth: true
                                 }
 
-                                // Frecency Star for top-used apps
-                                Text {
-                                    visible: modelData.score > 0
-                                    text: "★"
-                                    font.family: "JetBrainsMono Nerd Font"
-                                    font.pixelSize: 11
-                                    color: Theme.accent
-                                }
                             }
 
                             Text {
-                                text: modelData.subtitle ?? modelData.exec
+                                text: "Clip #" + modelData.id
                                 font.family: "JetBrainsMono Nerd Font"
                                 font.pixelSize: 10
                                 color: isSelected ? Theme.silver : Theme.gray
@@ -394,7 +324,7 @@ PanelWindow {
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
                         onClicked: {
-                            launcherWindow.launch(modelData.exec, modelData.name)
+                            clipboardWindow.pasteClip(modelData.id)
                         }
                     }
                 }
@@ -409,14 +339,14 @@ PanelWindow {
             RowLayout {
                 Layout.fillWidth: true
                 Text {
-                    text: "↑↓ nav • ↵ launch • Esc exit"
+                    text: "↑↓ nav • ↵ copy • Esc exit"
                     font.family: "JetBrainsMono Nerd Font"
                     font.pixelSize: 9
                     color: Theme.gray
                 }
                 Item { Layout.fillWidth: true }
                 Text {
-                    text: "Frecency ranking"
+                    text: "Cliphist"
                     font.family: "JetBrainsMono Nerd Font"
                     font.pixelSize: 9
                     color: Theme.silver
