@@ -24,7 +24,6 @@ PanelWindow {
 
     function close() {
         launcherWindow.requestClose()
-        visible = false
     }
     
 
@@ -405,23 +404,6 @@ PanelWindow {
                 }
             }
 
-            // Footer hint
-            RowLayout {
-                Layout.fillWidth: true
-                Text {
-                    text: "↑↓ nav • ↵ launch • Esc exit"
-                    font.family: "JetBrainsMono Nerd Font"
-                    font.pixelSize: 9
-                    color: Theme.gray
-                }
-                Item { Layout.fillWidth: true }
-                Text {
-                    text: "Frecency ranking"
-                    font.family: "JetBrainsMono Nerd Font"
-                    font.pixelSize: 9
-                    color: Theme.silver
-                }
-            }
         }
     }
 }

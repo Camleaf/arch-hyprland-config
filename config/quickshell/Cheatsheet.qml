@@ -6,7 +6,6 @@ import Quickshell.Wayland
 import Quickshell.Io
 
 
-
 PanelWindow {
     id: cheatsheetWindow
 
@@ -77,7 +76,7 @@ PanelWindow {
         { cat: "theme", icon: "󱂬", desc: "Window Overview (Alt)", detail: "Standard Alt-Tab window switcher", keys: ["ALT", "TAB"] },
         { cat: "theme", icon: "󰅍", desc: "Clipboard History", detail: "Search & paste clipboard history", keys: ["SUPER", "V"] },
         { cat: "theme", icon: "󰍡", desc: "Control Center / Dashboard", detail: "Slide-out widgets & notifications", keys: ["SUPER", "N"] },
-        { cat: "theme", icon: "󰌌", desc: "Shortcuts Cheatsheet", detail: "Toggle this keybindings guide", keys: ["SUPER", "/"] },
+        { cat: "theme", icon: "󰌌", desc: "Shortcuts", detail: "Toggle this keybindings guide", keys: ["SUPER", "/"] },
 
         // Window Management
         { cat: "windows", icon: "󰅙", desc: "Close Active Window", detail: "Kill currently focused client", keys: ["SUPER", "F4"] },
@@ -116,12 +115,10 @@ PanelWindow {
     // Filtered items computed property
     property var filteredShortcuts: {
         let q = searchQuery.trim().toLowerCase()
-        let cat = currentCategory
         let res = []
 
         for (let i = 0; i < allShortcuts.length; i++) {
             let item = allShortcuts[i]
-            if (cat !== "all" && item.cat !== cat) continue
 
             if (q.length > 0) {
                 let match = item.desc.toLowerCase().indexOf(q) !== -1 ||
@@ -156,7 +153,6 @@ PanelWindow {
             anchors.margins: 14
             spacing: 10
 
-            // Header Section: Title & Close Button
             RowLayout {
                 Layout.fillWidth: true
                 spacing: 8
@@ -169,7 +165,7 @@ PanelWindow {
                 }
 
                 Text {
-                    text: "Shortcuts Cheatsheet"
+                    text: "Shortcuts"
                     font.family: "JetBrainsMono Nerd Font"
                     font.pixelSize: 13
                     font.bold: true
@@ -179,8 +175,6 @@ PanelWindow {
                 Item { Layout.fillWidth: true }
 
                 Rectangle {
-                    width: 24
-                    height: 24
                     radius: 6
                     color: closeArea.containsMouse ? Theme.bg2 : "transparent"
                     border.color: closeArea.containsMouse ? Theme.bg3 : "transparent"
@@ -261,16 +255,6 @@ PanelWindow {
                                 shortcutList.positionViewAtIndex(shortcutList.currentIndex, ListView.Contain)
                             }
                         }
-                        Keys.onTabPressed: {
-                            let cats = ["all", "apps", "theme", "windows", "workspaces", "system"]
-                            let idx = cats.indexOf(cheatsheetWindow.currentCategory)
-                            cheatsheetWindow.currentCategory = cats[(idx + 1) % cats.length]
-                        }
-                        Keys.onBacktabPressed: {
-                            let cats = ["all", "apps", "theme", "windows", "workspaces", "system"]
-                            let idx = cats.indexOf(cheatsheetWindow.currentCategory)
-                            cheatsheetWindow.currentCategory = cats[(idx - 1 + cats.length) % cats.length]
-                        }
 
                         Keys.onEscapePressed: {
                             if (text.length > 0) {
@@ -301,48 +285,6 @@ PanelWindow {
                     }
                 }
             }
-
-            // Category Filter Pills
-            RowLayout {
-                Layout.fillWidth: true
-                spacing: 5
-
-                Repeater {
-                    model: [
-                        { id: "all", label: "All" },
-                        { id: "apps", label: "Apps" },
-                        { id: "theme", label: "Theme" },
-                        { id: "windows", label: "Win" },
-                        { id: "workspaces", label: "Work" },
-                        { id: "system", label: "Sys" }
-                    ]
-
-                    Rectangle {
-                        height: 24
-                        Layout.fillWidth: true
-                        radius: 6
-                        color: cheatsheetWindow.currentCategory === modelData.id ? Theme.accent : Theme.bg1
-                        border.color: cheatsheetWindow.currentCategory === modelData.id ? Theme.accent : Theme.bg2
-                        border.width: 1
-
-                        Text {
-                            anchors.centerIn: parent
-                            text: modelData.label
-                            font.family: "JetBrainsMono Nerd Font"
-                            font.pixelSize: 10
-                            font.bold: cheatsheetWindow.currentCategory === modelData.id
-                            color: cheatsheetWindow.currentCategory === modelData.id ? Theme.bg0 : Theme.fg1
-                        }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            cursorShape: Qt.PointingHandCursor
-                            onClicked: cheatsheetWindow.currentCategory = modelData.id
-                        }
-                    }
-                }
-            }
-
             // Shortcuts List View (Compact Single-line)
             Rectangle {
                 Layout.fillWidth: true
@@ -452,27 +394,6 @@ PanelWindow {
                 }
             }
 
-            // Footer bar
-            RowLayout {
-                Layout.fillWidth: true
-                spacing: 8
-
-                Text {
-                    text: "↑ / ↓ navigate • TAB category"
-                    font.family: "JetBrainsMono Nerd Font"
-                    font.pixelSize: 9
-                    color: Theme.gray
-                }
-
-                Item { Layout.fillWidth: true }
-
-                Text {
-                    text: "ESC to close"
-                    font.family: "JetBrainsMono Nerd Font"
-                    font.pixelSize: 9
-                    color: Theme.gray
-                }
-            }
         }
     }
 }

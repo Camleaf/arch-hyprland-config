@@ -174,7 +174,6 @@ PanelWindow {
                     Layout.fillWidth: true
                 }
 
-                // Today jump button
                 Rectangle {
                     height: 24
                     implicitWidth: 50
@@ -199,7 +198,6 @@ PanelWindow {
                     }
                 }
 
-                // Prev Month Button
                 Rectangle {
                     width: 24
                     height: 24
@@ -319,38 +317,6 @@ PanelWindow {
                             anchors.fill: parent
                             hoverEnabled: true
                         }
-                    }
-                }
-            }
-
-            // Footer: Uptime & Time info
-            Rectangle {
-                Layout.fillWidth: true
-                height: 28
-                radius: 4
-                color: Theme.bg1
-                border.color: Theme.bg3
-                border.width: 1
-
-                RowLayout {
-                    anchors.fill: parent
-                    anchors.leftMargin: 8
-                    anchors.rightMargin: 8
-
-                    Text {
-                        text: "󰥔 " + calWindow.uptimeStr
-                        font.family: "JetBrainsMono Nerd Font"
-                        font.pixelSize: 10
-                        color: Theme.silver
-                        Layout.fillWidth: true
-                        elide: Text.ElideRight
-                    }
-
-                    Text {
-                        text: "Esc / Click to close"
-                        font.family: "JetBrainsMono Nerd Font"
-                        font.pixelSize: 9
-                        color: Theme.gray
                     }
                 }
             }

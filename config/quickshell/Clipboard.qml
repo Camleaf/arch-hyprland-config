@@ -24,7 +24,6 @@ PanelWindow {
 
     function close() {
         clipboardWindow.requestClose()
-        visible = false
     }
 
     

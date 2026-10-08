@@ -17,7 +17,7 @@ PanelWindow {
         left: true
         right: true
     }
-
+    exclusionMode: ExclusionMode.Ignore 
     color: "transparent"
     signal requestClose()
 
@@ -38,17 +38,17 @@ PanelWindow {
         sessionProc.running = true
     }
 
-    // Escape key handler to cancel safely
+    // Escape key handle
     Item {
         anchors.fill: parent
         focus: sessionWindow.visible
         Keys.onEscapePressed: sessionWindow.close()
     }
 
-    // Fullscreen dimmed backdrop (Click anywhere outside to cancel)
+    // Bg
     Rectangle {
         anchors.fill: parent
-        color: Qt.rgba(0, 0, 0, 0.65)
+        color: Qt.rgba(0, 0, 0, 0.3)
         opacity: sessionWindow.visible ? 1.0 : 0.0
         Behavior on opacity {
             NumberAnimation { duration: 220; easing.type: Easing.OutCubic }
@@ -80,55 +80,12 @@ PanelWindow {
             spacing: 24
             Layout.alignment: Qt.AlignHCenter
 
-            // Header Greeting & Instructions
-            ColumnLayout {
-                Layout.alignment: Qt.AlignHCenter
-                spacing: 6
-
-                RowLayout {
-                    Layout.alignment: Qt.AlignHCenter
-                    spacing: 8
-
-                    Rectangle {
-                        width: 28
-                        height: 28
-                        radius: 14
-                        color: Theme.bg1
-                        border.color: Theme.accent
-                        border.width: 1
-                        Text {
-                            anchors.centerIn: parent
-                            text: "󰣇"
-                            font.family: "JetBrainsMono Nerd Font"
-                            font.pixelSize: 15
-                            color: Theme.accent
-                        }
-                    }
-
-                    Text {
-                        text: "Session Manager"
-                        font.family: "JetBrainsMono Nerd Font"
-                        font.bold: true
-                        font.pixelSize: 18
-                        color: Theme.fg0
-                    }
-                }
-
-                Text {
-                    Layout.alignment: Qt.AlignHCenter
-                    text: "Select an action below or click outside / press Esc to cancel"
-                    font.family: "JetBrainsMono Nerd Font"
-                    font.pixelSize: 11
-                    color: Theme.silver
-                }
-            }
 
             // Cards Row (5 Action Tiles)
             RowLayout {
                 spacing: 16
                 Layout.alignment: Qt.AlignHCenter
 
-                // 1. LOCK
                 Rectangle {
                     width: 115
                     height: 135
@@ -419,42 +376,6 @@ PanelWindow {
                 }
             }
 
-            // Cancel Button Bottom Pill
-            Rectangle {
-                Layout.alignment: Qt.AlignHCenter
-                width: 110
-                height: 32
-                radius: 16
-                color: cancelBtnMouse.containsMouse ? Theme.bg3 : Theme.bg1
-                border.color: cancelBtnMouse.containsMouse ? Theme.accent : Theme.bg3
-                border.width: 1
-
-                Row {
-                    anchors.centerIn: parent
-                    spacing: 6
-                    Text {
-                        text: "󰅖"
-                        font.family: "JetBrainsMono Nerd Font"
-                        font.pixelSize: 11
-                        color: cancelBtnMouse.containsMouse ? Theme.red : Theme.silver
-                    }
-                    Text {
-                        text: "Cancel"
-                        font.family: "JetBrainsMono Nerd Font"
-                        font.pixelSize: 11
-                        font.bold: true
-                        color: cancelBtnMouse.containsMouse ? Theme.fg0 : Theme.silver
-                    }
-                }
-
-                MouseArea {
-                    id: cancelBtnMouse
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: sessionWindow.close()
-                }
-            }
         }
     }
 }
