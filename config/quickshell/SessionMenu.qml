@@ -81,7 +81,6 @@ PanelWindow {
             Layout.alignment: Qt.AlignHCenter
 
 
-            // Cards Row (5 Action Tiles)
             RowLayout {
                 spacing: 16
                 Layout.alignment: Qt.AlignHCenter
@@ -182,13 +181,6 @@ PanelWindow {
                                 font.pixelSize: 13
                                 color: Theme.fg0
                             }
-                            Text {
-                                Layout.alignment: Qt.AlignHCenter
-                                text: "Suspend"
-                                font.family: "JetBrainsMono Nerd Font"
-                                font.pixelSize: 9
-                                color: Theme.silver
-                            }
                         }
                     }
 
@@ -201,7 +193,6 @@ PanelWindow {
                     }
                 }
 
-                // 3. LOGOUT / EXIT
                 Rectangle {
                     width: 115
                     height: 135
@@ -239,13 +230,6 @@ PanelWindow {
                                 font.bold: true
                                 font.pixelSize: 13
                                 color: Theme.fg0
-                            }
-                            Text {
-                                Layout.alignment: Qt.AlignHCenter
-                                text: "Exit Hyprland"
-                                font.family: "JetBrainsMono Nerd Font"
-                                font.pixelSize: 9
-                                color: Theme.silver
                             }
                         }
                     }
@@ -298,13 +282,6 @@ PanelWindow {
                                 font.pixelSize: 13
                                 color: Theme.fg0
                             }
-                            Text {
-                                Layout.alignment: Qt.AlignHCenter
-                                text: "Reboot PC"
-                                font.family: "JetBrainsMono Nerd Font"
-                                font.pixelSize: 9
-                                color: Theme.silver
-                            }
                         }
                     }
 
@@ -355,13 +332,6 @@ PanelWindow {
                                 font.bold: true
                                 font.pixelSize: 13
                                 color: Theme.fg0
-                            }
-                            Text {
-                                Layout.alignment: Qt.AlignHCenter
-                                text: "Shut Down"
-                                font.family: "JetBrainsMono Nerd Font"
-                                font.pixelSize: 9
-                                color: Theme.silver
                             }
                         }
                     }

@@ -316,54 +316,10 @@ PanelWindow {
                     }
                 }
             }
-
-            // Night Light / Blue Light Filter Pill (Beside Workspaces)
-            Rectangle {
-                height: 34
-                implicitWidth: nlRow.implicitWidth + 16
-                radius: 6
-                color: barWindow.nightLightActive
-                       ? Qt.rgba(Theme.yellow.r, Theme.yellow.g, Theme.yellow.b, 0.2)
-                       : (nlMouse.containsMouse ? Theme.bg2 : Qt.rgba(Theme.bg0.r, Theme.bg0.g, Theme.bg0.b, 0.88))
-                border.color: barWindow.nightLightActive
-                              ? Theme.yellow
-                              : (nlMouse.containsMouse ? Theme.accent : Theme.bg3)
-                border.width: 1
-
-                Row {
-                    id: nlRow
-                    anchors.centerIn: parent
-                    spacing: 6
-
-                    Text {
-                        text: "󰖔"
-                        font.family: "JetBrainsMono Nerd Font"
-                        font.pixelSize: 14
-                        color: barWindow.nightLightActive ? Theme.yellow : Theme.gray
-                    }
-
-                    Text {
-                        text: barWindow.nightLightLabel
-                        font.family: "JetBrainsMono Nerd Font"
-                        font.pixelSize: 11
-                        font.bold: barWindow.nightLightActive
-                        color: barWindow.nightLightActive ? Theme.yellow : Theme.fg1
-                    }
-                }
-
-                MouseArea {
-                    id: nlMouse
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: barWindow.toggleNightLight()
-                }
-            }
         }
 
         Item { Layout.fillWidth: true }
 
-        // ================= CENTER: Clock & Date Pill =================
         Rectangle {
             id: clockPill
             height: 34

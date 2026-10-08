@@ -12,7 +12,6 @@ ShellRoot {
     property bool wallpaperPickerVisible: false
     property bool calendarVisible: false
     property bool sessionVisible: false
-    property bool overviewVisible: false
     property bool themePickerVisible: false
     property bool cheatsheetVisible: false
     property bool clipboardVisible: false
@@ -27,7 +26,6 @@ ShellRoot {
         wallpaperPickerVisible = false
         calendarVisible = false
         sessionVisible = false
-        overviewVisible = false
         themePickerVisible = false
         cheatsheetVisible = false
         clipboardVisible = false
@@ -44,14 +42,6 @@ ShellRoot {
     }
 
 
-    function toggleOverview() {
-        if (overviewVisible) {
-            overviewVisible = false
-        } else {
-            closeAll()
-            overviewVisible = true
-        }
-    }
 
     function toggleThemePicker() {
         if (themePickerVisible) {
@@ -153,10 +143,6 @@ ShellRoot {
     }
 
 
-    IpcHandler {
-        target: "overview"
-        function toggle() { root.toggleOverview() }
-    }
 
     IpcHandler {
         target: "theme_picker"
@@ -182,7 +168,6 @@ ShellRoot {
         onCalendarToggleRequested: root.toggleCalendar()
     }
 
-    // Dashboard Side Panel (Slide-out)
     Dashboard {
         id: dashboard
         visible: root.dashboardVisible
@@ -195,35 +180,30 @@ ShellRoot {
         onRequestClose: root.wifiWidgetVisisble = false
     }
 
-    // App Launcher
     Launcher {
         id: launcher
         visible: root.launcherVisible
         onRequestClose: root.launcherVisible = false
     }
 
-    // Clipbioard
     Clipboard {
         id: clipboard 
         visible: root.clipboardVisible
         onRequestClose: root.clipboardVisible = false
     }
     
-    // Wallpaper & Palette Picker Modal
     WallpaperPicker {
         id: wallpaperPicker
         visible: root.wallpaperPickerVisible
         onRequestClose: root.wallpaperPickerVisible = false
     }
 
-    // Interactive Calendar Dropdown Modal
     CalendarDropdown {
         id: calendarDropdown
         visible: root.calendarVisible
         onRequestClose: root.calendarVisible = false
     }
 
-    // Native Session & Power Menu Modal (wlogout replacement)
     SessionMenu {
         id: sessionMenu
         visible: root.sessionVisible
@@ -231,21 +211,13 @@ ShellRoot {
     }
 
 
-    // Native Window Overview / Exposé Modal
-    Overview {
-        id: overview
-        visible: root.overviewVisible
-        onRequestClose: root.overviewVisible = false
-    }
 
-    // Curated Theme Preset Picker Modal (ALT+T)
     ThemePicker {
         id: themePicker
         visible: root.themePickerVisible
         onRequestClose: root.themePickerVisible = false
     }
 
-    // Keybindings Cheatsheet Modal (SUPER+/)
     Cheatsheet {
         id: cheatsheet
         visible: root.cheatsheetVisible

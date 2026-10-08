@@ -9,8 +9,6 @@ Item {
     // Do Not Disturb state
     property bool dnd: false
 
-    // Stored notifications for the Notification Center history
-    // Each item: { id, appName, appIcon, summary, body, image, urgency, timeStr, timestamp, actions, rawNotif }
     property var historyList: []
     property int unreadCount: historyList.length
 
