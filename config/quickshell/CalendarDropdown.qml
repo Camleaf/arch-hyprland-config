@@ -6,6 +6,7 @@ import Quickshell.Wayland
 import Quickshell.Widgets
 import Quickshell.Io
 
+
 PanelWindow {
     id: calWindow
 

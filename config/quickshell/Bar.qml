@@ -106,7 +106,7 @@ PanelWindow {
     property string batteryIcon: "󰁹"
     Process {
         id: batReader
-        command: ["sh", "-c", "upower -i /org/freedesktop/UPower/devices/battery_BAT1 2>/dev/null | awk '/percentage:/ {pct=$2} /state:/ {st=$2} END {if (pct) print pct, st; else print \"100% fully-charged\"}'"]
+        command: ["sh", "-c", "upower -i $(upower -e | grep BAT) | grep -E \"state|percentage\" | awk '/percentage:/ {pct=$2} /state:/ {st=$2} END {if (pct) print pct, st; else print \"100% fully-charged\"}'"]
         stdout: SplitParser {
             onRead: data => {
                 let parts = data.trim().split(" ")
