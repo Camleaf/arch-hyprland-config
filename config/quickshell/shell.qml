@@ -7,7 +7,6 @@ ShellRoot {
     id: root
 
     
-    property bool dashboardVisible: false
     property bool launcherVisible: false
     property bool wallpaperPickerVisible: false
     property bool calendarVisible: false
@@ -21,7 +20,6 @@ ShellRoot {
         /* In progress shortening all of this, gotta separate a bunch of the apps which were bundled for some reason
          */
 
-        dashboardVisible = false
         launcherVisible = false
         wallpaperPickerVisible = false
         calendarVisible = false
@@ -61,14 +59,6 @@ ShellRoot {
         }
     }
 
-    function toggleDashboard() {
-        if (dashboardVisible) {
-            dashboardVisible = false
-        } else {
-            closeAll()
-            dashboardVisible = true
-        }
-    }
 
     function toggleLauncher() {
         if (launcherVisible) {
@@ -110,11 +100,6 @@ ShellRoot {
         }
     }
 
-    // IPC Targets callable via: quickshell ipc call <target> <function>
-    IpcHandler {
-        target: "dashboard"
-        function toggle() { root.toggleDashboard() }
-    }
 
     IpcHandler {
         target: "launcher"
@@ -162,17 +147,11 @@ ShellRoot {
     // Top Bar (Always visible)
     Bar {
         id: topBar
-        onDashboardToggleRequested: root.toggleDashboard()
         onLauncherToggleRequested: root.toggleLauncher()
         onWallpaperToggleRequested: root.toggleWallpaperPicker()
         onCalendarToggleRequested: root.toggleCalendar()
     }
 
-    Dashboard {
-        id: dashboard
-        visible: root.dashboardVisible
-        onRequestClose: root.dashboardVisible = false
-    }
 
     WiFiWidget{
         id:wifiwidget
@@ -224,15 +203,4 @@ ShellRoot {
         onRequestClose: root.cheatsheetVisible = false
     }
 
-    // IPC handler for notifications
-    IpcHandler {
-        target: "notifications"
-        function toggleDnd() { NotificationManager.toggleDnd() }
-        function clear() { NotificationManager.clearAll() }
-    }
-
-    // Floating Notification Popups (Toast banners)
-    NotificationPopup {
-        id: notificationPopup
-    }
 }

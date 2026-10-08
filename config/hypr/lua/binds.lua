@@ -17,8 +17,6 @@ hl.bind("ALT + T",                 hl.dsp.exec_cmd("quickshell ipc call theme_pi
 hl.bind(mainMod .. " + slash",    hl.dsp.exec_cmd("quickshell ipc call cheatsheet toggle"))
 hl.bind(mainMod .. " + question", hl.dsp.exec_cmd("quickshell ipc call cheatsheet toggle"))
 
-hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("quickshell ipc call dashboard toggle"))
-
 hl.bind(mainMod .. " + ALT + N",   hl.dsp.exec_cmd(home .. "/.config/hypr/scripts/bluelight.sh toggle"))
 hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd(home .. "/.config/hypr/scripts/bluelight.sh toggle"))
 

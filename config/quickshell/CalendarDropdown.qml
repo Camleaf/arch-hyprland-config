@@ -27,10 +27,9 @@ PanelWindow {
         calWindow.requestClose()
     }
 
-    // Backdrop click-to-dismiss
     Rectangle {
         anchors.fill: parent
-        color: Qt.rgba(0, 0, 0, 0.45)
+        color: Qt.rgba(0, 0, 0, 0.0)
 
         MouseArea {
             anchors.fill: parent

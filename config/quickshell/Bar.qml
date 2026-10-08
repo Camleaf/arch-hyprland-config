@@ -23,7 +23,6 @@ PanelWindow {
     implicitHeight: 36
     color: "transparent"
 
-    signal dashboardToggleRequested()
     signal launcherToggleRequested()
     signal wallpaperToggleRequested()
     signal calendarToggleRequested()
@@ -436,7 +435,7 @@ PanelWindow {
                     anchors.fill: parent
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
-                    onClicked: barWindow.dashboardToggleRequested()
+                    // onClicked: barWindow.dashboardToggleRequested()
                 }
             }
 
@@ -481,7 +480,7 @@ PanelWindow {
                     anchors.fill: parent
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
-                    onClicked: barWindow.dashboardToggleRequested()
+                    //onClicked: barWindow.dashboardToggleRequested()
                 }
             }
 
@@ -594,63 +593,6 @@ PanelWindow {
                 }
             }
 
-            // Notification Bell / Indicator Trigger
-            Rectangle {
-                width: notifBadge.visible ? 46 : 36
-                height: 34
-                radius: 6
-                color: notifBtnMouse.containsMouse ? Theme.bg2 : Qt.rgba(Theme.bg0.r, Theme.bg0.g, Theme.bg0.b, 0.88)
-                border.color: notifBtnMouse.containsMouse ? Theme.accent : (NotificationManager.dnd ? Theme.red : Theme.bg3)
-                border.width: 1
-
-                Row {
-                    anchors.centerIn: parent
-                    spacing: 4
-
-                    Text {
-                        text: NotificationManager.dnd ? "󰂛" : (NotificationManager.unreadCount > 0 ? "󰂞" : "󰂚")
-                        font.family: "JetBrainsMono Nerd Font"
-                        font.pixelSize: 14
-                        color: NotificationManager.dnd ? Theme.red : (NotificationManager.unreadCount > 0 ? Theme.accent : Theme.fg0)
-                    }
-
-                    Rectangle {
-                        id: notifBadge
-                        visible: NotificationManager.unreadCount > 0
-                        width: Math.max(14, badgeText.implicitWidth + 6)
-                        height: 14
-                        radius: 7
-                        color: Theme.accent
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        Text {
-                            id: badgeText
-                            anchors.centerIn: parent
-                            text: NotificationManager.unreadCount > 99 ? "99+" : NotificationManager.unreadCount
-                            font.family: "JetBrainsMono Nerd Font"
-                            font.pixelSize: 9
-                            font.bold: true
-                            color: Theme.bg0
-                        }
-                    }
-                }
-
-                MouseArea {
-                    id: notifBtnMouse
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    cursorShape: Qt.PointingHandCursor
-                    acceptedButtons: Qt.LeftButton | Qt.RightButton
-                    onClicked: mouse => {
-                        if (mouse.button === Qt.RightButton) {
-                            NotificationManager.toggleDnd()
-                        } else {
-                            barWindow.dashboardToggleRequested()
-                        }
-                    }
-                }
-            }
-
             // Control Center Trigger
             Rectangle {
                 width: 36
@@ -673,7 +615,7 @@ PanelWindow {
                     anchors.fill: parent
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
-                    onClicked: barWindow.dashboardToggleRequested()
+                    //onClicked: barWindow.dashboardToggleRequested()
                 }
             }
         }
