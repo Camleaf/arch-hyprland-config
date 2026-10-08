@@ -40,7 +40,7 @@ PanelWindow {
     // Click outside backdrop to close
     Rectangle {
         anchors.fill: parent
-        color: Qt.rgba(0, 0, 0, 0.55)
+        color: Qt.rgba(0, 0, 0, .3)
 
         MouseArea {
             anchors.fill: parent

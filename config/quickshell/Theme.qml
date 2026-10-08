@@ -6,7 +6,6 @@ import Quickshell.Io
 Item {
     id: root
 
-    // Reactive Material You Dynamic Colors
     property color bg0:       "#111318"
     property color bg1:       "#191c20"
     property color bg2:       "#1d2024"

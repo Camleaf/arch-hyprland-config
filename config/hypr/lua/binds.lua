@@ -22,8 +22,6 @@ hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("quickshell ipc call clipboard toggle
 hl.bind(mainMod .. " + TAB", hl.dsp.exec_cmd("quickshell ipc call overview toggle"))
 hl.bind("ALT + TAB",         hl.dsp.exec_cmd("quickshell ipc call overview toggle"))
 
--- System & Desktop Hub (SUPER+,)
-hl.bind(mainMod .. " + comma", hl.dsp.exec_cmd("quickshell ipc call settings toggle"))
 
 -- Wallpaper & Theming Decoupled (Visual Picker Modals)
 -- SUPER + W: Wallpaper & Dynamic Rice Menu (Full Sync)

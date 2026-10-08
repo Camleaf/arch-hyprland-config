@@ -1,17 +1,18 @@
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import "bar_widgets"
 
 ShellRoot {
     id: root
 
-    
+    property var narr 
+
     property bool dashboardVisible: false
     property bool launcherVisible: false
     property bool wallpaperPickerVisible: false
     property bool calendarVisible: false
     property bool sessionVisible: false
+    property bool settingsVisible: false
     property bool overviewVisible: false
     property bool themePickerVisible: false
     property bool cheatsheetVisible: false
@@ -27,6 +28,7 @@ ShellRoot {
         wallpaperPickerVisible = false
         calendarVisible = false
         sessionVisible = false
+        settingsVisible = false
         overviewVisible = false
         themePickerVisible = false
         cheatsheetVisible = false
@@ -43,6 +45,14 @@ ShellRoot {
         }
     }
 
+    function toggleSettings() {
+        if (settingsVisible) {
+            settingsVisible = false
+        } else {
+            closeAll()
+            settingsVisible = true
+        }
+    }
 
     function toggleOverview() {
         if (overviewVisible) {
@@ -152,6 +162,10 @@ ShellRoot {
         function toggle() { root.toggleSession() }
     }
 
+    IpcHandler {
+        target: "settings"
+        function toggle() { root.toggleSettings() }
+    }
 
     IpcHandler {
         target: "overview"
@@ -230,6 +244,12 @@ ShellRoot {
         onRequestClose: root.sessionVisible = false
     }
 
+    // Live Rice Settings Hub Modal
+    SettingsHub {
+        id: settingsHub
+        visible: root.settingsVisible
+        onRequestClose: root.settingsVisible = false
+    }
 
     // Native Window Overview / Exposé Modal
     Overview {

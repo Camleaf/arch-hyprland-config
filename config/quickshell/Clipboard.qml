@@ -9,9 +9,9 @@ import Quickshell.Io
 PanelWindow {
     id: clipboardWindow
 
-    WlrLayershell.layer: WlrLayer.Overlay
-    WlrLayershell.keyboardFocus: visible ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
-
+    /* WlrLayershell.layer: WlrLayer.Overlay
+     WlrLayershell.keyboardFocus: visible ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
+    */
     anchors {
         top: true
         bottom: true
@@ -24,6 +24,7 @@ PanelWindow {
 
     function close() {
         clipboardWindow.requestClose()
+        visible = false
     }
 
     
@@ -39,8 +40,8 @@ PanelWindow {
     // Click outside backdrop to close
     Rectangle {
         anchors.fill: parent
-        color: Qt.rgba(0, 0, 0, 0.55)
-
+        color: Qt.rgba(0, 0, 0, 0.5)
+        
         MouseArea {
             anchors.fill: parent
             onClicked: clipboardWindow.close()

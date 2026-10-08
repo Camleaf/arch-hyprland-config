@@ -65,24 +65,18 @@ PanelWindow {
     // Complete Keybindings Database
     readonly property var allShortcuts: [
         // Applications & Launch
-        { cat: "apps", icon: "󰞷", desc: "Terminal (Ghostty)", detail: "Launch primary tiled terminal", keys: ["SUPER", "Q"] },
+        { cat: "apps", icon: "󰞷", desc: "Terminal", detail: "Launch primary tiled terminal", keys: ["SUPER", "Q"] },
         { cat: "apps", icon: "󰀻", desc: "App Launcher", detail: "Spotlight application search", keys: ["SUPER", "SPACE"] },
-        { cat: "apps", icon: "󰀻", desc: "App Launcher (Alt)", detail: "Classic dmenu shortcut", keys: ["SUPER", "D"] },
-        { cat: "apps", icon: "󰞷", desc: "Scratchpad Terminal", detail: "Seamless floating popup terminal", keys: ["SUPER", "`"] },
-        { cat: "apps", icon: "󰞷", desc: "Scratchpad Terminal (Alt)", detail: "Secondary toggle bind", keys: ["SUPER", "U"] },
-        { cat: "apps", icon: "󰈹", desc: "Firefox Browser", detail: "Launch default web browser", keys: ["SUPER", "B"] },
-        { cat: "apps", icon: "󰊯", desc: "Brave Browser", detail: "Launch Brave browser", keys: ["SUPER", "SHIFT", "B"] },
-        { cat: "apps", icon: "󰉋", desc: "File Manager (Thunar)", detail: "Open GUI file explorer", keys: ["SUPER", "E"] },
+        { cat: "apps", icon: "󰊯", desc: "Brave Browser", detail: "Launch Brave browser", keys: ["SUPER", "B"] },
+        { cat: "apps", icon: "󰉋", desc: "File Manager", detail: "Open GUI file explorer", keys: ["SUPER", "E"] },
 
         // Theming & Rice
-        { cat: "theme", icon: "󰸉", desc: "Wallpaper & Rice Menu", detail: "Wallpaper picker with full palette sync", keys: ["SUPER", "W"] },
-        { cat: "theme", icon: "󰸉", desc: "Wallpaper Menu Only", detail: "Change wallpaper keeping active theme", keys: ["SUPER", "SHIFT", "W"] },
+        { cat: "theme", icon: "󰸉", desc: "Wallpaper Menu", detail: "Change wallpaper keeping active theme", keys: ["SUPER", "W"] },
         { cat: "theme", icon: "󰏘", desc: "Theme Studio", detail: "Curated presets (Catppuccin, Tokyo, etc.)", keys: ["ALT", "T"] },
         { cat: "theme", icon: "󱂬", desc: "Window Overview / Exposé", detail: "Native Exposé window switcher", keys: ["SUPER", "TAB"] },
         { cat: "theme", icon: "󱂬", desc: "Window Overview (Alt)", detail: "Standard Alt-Tab window switcher", keys: ["ALT", "TAB"] },
         { cat: "theme", icon: "󰅍", desc: "Clipboard History", detail: "Search & paste clipboard history", keys: ["SUPER", "V"] },
         { cat: "theme", icon: "󰍡", desc: "Control Center / Dashboard", detail: "Slide-out widgets & notifications", keys: ["SUPER", "N"] },
-        { cat: "theme", icon: "󰒓", desc: "Settings & Tuning Hub", detail: "Live rice physics & system monitor", keys: ["SUPER", ","] },
         { cat: "theme", icon: "󰌌", desc: "Shortcuts Cheatsheet", detail: "Toggle this keybindings guide", keys: ["SUPER", "/"] },
 
         // Window Management
@@ -94,7 +88,6 @@ PanelWindow {
         { cat: "windows", icon: "󰁔", desc: "Focus Navigation", detail: "Move focus to adjacent window", keys: ["SUPER", "Arrows"] },
         { cat: "windows", icon: "󰁔", desc: "Focus Navigation (Vim)", detail: "Vim navigation (H = left, K = up)", keys: ["SUPER", "H / K"] },
         { cat: "windows", icon: "󰁞", desc: "Move Window Position", detail: "Move active window in layout", keys: ["SUPER", "SHIFT", "Arrows"] },
-        { cat: "windows", icon: "󰁞", desc: "Move Window (Vim)", detail: "Move active window with Vim keys", keys: ["SUPER", "SHIFT", "H/J/K"] },
         { cat: "windows", icon: "󰩨", desc: "Resize Active Window", detail: "Grow/shrink window dimensions (±30px)", keys: ["SUPER", "ALT", "Arrows"] },
         { cat: "windows", icon: "󰍽", desc: "Move Floating Window", detail: "Drag window with mouse", keys: ["SUPER", "LMB Drag"] },
         { cat: "windows", icon: "󰍽", desc: "Resize Floating Window", detail: "Resize window with mouse", keys: ["SUPER", "RMB Drag"] },
