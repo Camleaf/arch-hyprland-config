@@ -202,7 +202,6 @@ install_packages() {
         # Quickshell & Dynamic Theming (Available in extra!)
         quickshell
         matugen
-        awww
 
         # Qt6 Libraries
         qt6-base
@@ -420,33 +419,6 @@ init_theme() {
     fi
 }
 
-# ── Summary & Instructions ───────────────────────────────────────────────────
-print_summary() {
-    echo -e "\n${GREEN}${BOLD}🎉 Installation Complete!${NC}\n"
-    echo -e "${CYAN}${BOLD}── Essential Keybindings Cheat Sheet ────────────────────────${NC}"
-    echo -e "  ${BOLD}SUPER + SPACE${NC}      Spotlight Application Launcher (Quickshell)"
-    echo -e "  ${BOLD}SUPER + N${NC}          Control Center Dashboard & Notification Panel"
-    echo -e "  ${BOLD}SUPER + W${NC}          Wallpaper Picker & Dynamic Theme Switcher"
-    echo -e "  ${BOLD}ALT + T${NC}            Curated Theme Preset Studio"
-    echo -e "  ${BOLD}SUPER + /${NC}          Keybindings Cheatsheet Modal"
-    echo -e "  ${BOLD}SUPER + V${NC}          Clipboard History Manager (cliphist)"
-    echo -e "  ${BOLD}SUPER + \`${NC} / ${BOLD}SUPER + U${NC} Seamless Scratchpad Floating Terminal"
-    echo -e "  ${BOLD}SUPER + Q${NC}          Ghostty Terminal"
-    echo -e "  ${BOLD}SUPER + E${NC}          Thunar File Manager"
-    echo -e "  ${BOLD}SUPER + B${NC}          Web Browser"
-    echo -e "  ${BOLD}SUPER + F4${NC}         Close Active Window"
-    echo -e "  ${BOLD}SUPER + T${NC}          Toggle Window Floating"
-    echo -e "  ${BOLD}SUPER + F${NC}          Toggle Fullscreen"
-    echo -e "  ${BOLD}SUPER + ALT + N${NC}    Toggle Blue Light Filter (hyprsunset)"
-    echo -e "  ${BOLD}Print${NC}              Interactive Region Screenshot (grim + slurp)"
-    echo -e "  ${BOLD}SUPER + SHIFT + R${NC}  Region Screen Recording (wf-recorder)"
-    echo -e "  ${BOLD}SUPER + X${NC}          Power & Session Menu"
-    echo -e "  ${BOLD}SUPER + M${NC}          Exit Hyprland"
-    echo -e "${CYAN}─────────────────────────────────────────────────────────────${NC}"
-    echo -e "\n${BOLD}Ready to go!${NC}"
-    echo -e "Log in via SDDM selecting ${BOLD}Hyprland${NC}, or run ${BOLD}Hyprland${NC} / ${BOLD}start-hyprland${NC}.\n"
-}
-
 # ── Main ─────────────────────────────────────────────────────────────────────
 main() {
     print_banner
@@ -456,7 +428,6 @@ main() {
     deploy_configs
     setup_zsh_plugins
     init_theme
-    print_summary
 }
 
 main "$@"

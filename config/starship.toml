@@ -36,7 +36,7 @@ format = "[$path]($style) "
 truncation_length = 3
 truncation_symbol = "…/"
 home_symbol = "~"
-read_only = " 󰌾"
+read_only = ""
 read_only_style = "bold #ffb4ab"
 
 [git_branch]

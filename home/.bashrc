@@ -49,3 +49,7 @@ command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init bash)"
 
 # Starship Prompt
 command -v starship >/dev/null 2>&1 && eval "$(starship init bash)"
+
+
+# -- cam-cli
+export PATH="$PATH:$HOME/bin"

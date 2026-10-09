@@ -191,3 +191,9 @@ else
 fi
 alias killsteam="steam -shutdown"
 alias killdis="pkill -9 -f Discord"
+
+
+
+
+# -- cam-cli
+export PATH="$PATH:$HOME/bin"
