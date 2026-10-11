@@ -10,7 +10,7 @@ export TERMINAL="ghostty"
 export QT_QPA_PLATFORMTHEME="qt6ct"
 export QT_STYLE_OVERRIDE="breeze"
 export QT_PLUGIN_PATH="$HOME/.local/lib/qt6/plugins"
-export XDG_DATA_HOME="$HOME/.local/share:$XDG_DATA_HOME"
+export XDG_DATA_HOME="$HOME/.local/share"
 
 # ── History Settings ─────────────────────────────────────────────────────────
 HISTFILE="$HOME/.zsh_history"

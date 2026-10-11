@@ -24,7 +24,7 @@ hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
 
 hl.bind(mainMod .. " + X", hl.dsp.exec_cmd("quickshell ipc call session toggle"))
 
-hl.bind(mainMod .. " + M", hl.dsp.exit())
+hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exit())
 
 hl.bind(mainMod .. " + F4", hl.dsp.window.close())
 
@@ -71,7 +71,7 @@ hl.bind(mainMod .. " + SHIFT + R",        hl.dsp.exec_cmd(home .. "/.config/hypr
 for i = 1, 10 do
     local key = i % 10 -- 10 maps to key 0
     hl.bind(mainMod .. " + " .. key,         hl.dsp.focus({ workspace = i }))
-    hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+    hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i, follow = false }))
 end
 
 hl.bind(mainMod .. " + S",         hl.dsp.workspace.toggle_special("magic"))

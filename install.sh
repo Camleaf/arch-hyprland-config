@@ -187,6 +187,7 @@ install_packages() {
         fzf
         zoxide
         python
+        python3
         python-gobject
         ffmpeg
 
@@ -210,6 +211,12 @@ install_packages() {
         qt6-wayland
         qt6-5compat
         qt6ct
+
+
+        # Programming utils
+        fd
+        jdk25-jdk
+        npm
     )
 
     # Fallback AUR packages if bleeding-edge or git builds are desired

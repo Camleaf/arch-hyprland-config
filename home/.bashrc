@@ -12,7 +12,7 @@ export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
 export QT_QPA_PLATFORMTHEME="qt6ct"
 export QT_STYLE_OVERRIDE="breeze"
 export QT_PLUGIN_PATH="$HOME/.local/lib/qt6/plugins"
-export XDG_DATA_HOME="$HOME/.local/share:$XDG_DATA_HOME"
+export XDG_DATA_HOME="$HOME/.local/share"
 export EDITOR="nvim"
 export VISUAL="nvim"
 
