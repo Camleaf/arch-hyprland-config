@@ -1,7 +1,3 @@
-# =============================================================================
-# ~/.zshrc — Ultimate Modern Zsh with FZF-Tab Intellisense, Zoxide & Eye Candy
-# =============================================================================
-
 # ── Environment & Paths ───────────────────────────────────────────────────────
 export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
 export EDITOR="nvim"
@@ -133,13 +129,8 @@ fi
 # ── Modern Aliases & Functions ───────────────────────────────────────────────
 if command -v eza >/dev/null 2>&1; then
     alias ls='eza --icons=auto --group-directories-first'
-    alias ll='eza -la --icons=auto --group-directories-first --git'
-    alias l='eza -l --icons=auto --group-directories-first'
-    alias la='eza -a --icons=auto --group-directories-first'
-    alias lt='eza --tree --level=2 --icons=auto'
 else
     alias ls='ls --color=auto'
-    alias ll='ls -la'
 fi
 
 if command -v bat >/dev/null 2>&1; then
@@ -147,14 +138,6 @@ if command -v bat >/dev/null 2>&1; then
 fi
 
 alias grep='grep --color=auto'
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-alias c='clear'
-alias q='exit'
-alias nf='fastfetch'
-alias ff='fastfetch -s'
-alias nfs='fastfetch -s'
 
 # Fastfetch wrapper: -s / -m / --mini / --compact for cute bare-metal layout
 fastfetch() {
@@ -197,3 +180,5 @@ alias killdis="pkill -9 -f Discord"
 
 # -- cam-cli
 export PATH="$PATH:$HOME/bin"
+
+eval "$(ssh-agent -s)"

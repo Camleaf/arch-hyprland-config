@@ -1,6 +1,3 @@
-#
-# ~/.bashrc
-#
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
@@ -19,13 +16,8 @@ export VISUAL="nvim"
 # Aliases
 if command -v eza >/dev/null 2>&1; then
     alias ls='eza --icons=auto --group-directories-first'
-    alias ll='eza -la --icons=auto --group-directories-first --git'
-    alias l='eza -l --icons=auto --group-directories-first'
-    alias la='eza -a --icons=auto --group-directories-first'
-    alias lt='eza --tree --level=2 --icons=auto'
 else
     alias ls='ls --color=auto'
-    alias ll='ls -la'
 fi
 
 if command -v bat >/dev/null 2>&1; then
@@ -33,12 +25,6 @@ if command -v bat >/dev/null 2>&1; then
 fi
 
 alias grep='grep --color=auto'
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-alias c='clear'
-alias q='exit'
-alias nf='fastfetch'
 
 # FZF Integration
 [[ -f ~/.fzf/shell/key-bindings.bash ]] && source ~/.fzf/shell/key-bindings.bash
@@ -53,3 +39,5 @@ command -v starship >/dev/null 2>&1 && eval "$(starship init bash)"
 
 # -- cam-cli
 export PATH="$PATH:$HOME/bin"
+
+eval "$(ssh-agent -s)"
